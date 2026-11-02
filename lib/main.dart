@@ -29,18 +29,17 @@ class _MyAppState extends State<MyApp> {
              Text("$counter"),
 
           ],
-
-            
-                ),
-                floatingActionButton: FloatingActionButton(onPressed: (){
-setState(() {
-  counter++;
-});
-                }, child: Icon(Icons.plus_one)
-                ),
-              ),
-            );
-  
+         ),
+         floatingActionButton: FloatingActionButton(onPressed: (){
+         setState(() {
+           counter++;
+          },
+        );
+        }, 
+        child: Icon(Icons.plus_one)
+       ),
+      ),
+    );
   }
 }
 
