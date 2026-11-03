@@ -1,81 +1,85 @@
 import 'package:flutter/material.dart';
+import 'chat_detail.dart';
 
 class ChatHistory extends StatelessWidget {
-  ChatHistory({
-    super.key,
-    required this.name,
-    required this.n,
-  });
-
-  final String name;
-  final int n;
-
-  final List<String> send = [
-    "Hi",
-    "Hello",
-    "How are you?",
-    "I am fine",
-    "What are you up to?",
-    "Nothing",
-    "Okay",
-  ];
+  const ChatHistory({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(name),
-          backgroundColor: Colors.teal,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Chat History',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: send.length,
-                itemBuilder: (context, index) {
-                  bool isMe = index % 2 != 0;
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
 
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      alignment: isMe
-                          ? Alignment.centerRight
-                          : Alignment.centerLeft,
-                      child: Container(
-                        padding: const EdgeInsets.all(12.0),
-                        decoration: BoxDecoration(
-                          color: isMe
-                              ? Colors.green.shade100
-                              : Colors.grey.shade300,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          send[index],
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
+      body: ListView(
+        padding: const EdgeInsets.all(15),
+        children: [
+          const Text(
+            'Recent Chats',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
             ),
+          ),
 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Type a message...",
-                  border: const OutlineInputBorder(),
-                  suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.send),
-                  ),
-                ),
-              ),
-            ),
-          ],
+          const SizedBox(height: 20),
+
+          chatItem(context, 'Ali', 'Hello! How are you?'),
+          chatItem(context, 'Ahmed', 'See you tomorrow!'),
+          chatItem(context, 'Sara', 'Thank you so much!'),
+          chatItem(context, 'Ayesha', 'Good morning!'),
+          chatItem(context, 'Usman', 'Okay, see you!'),
+        ],
+      ),
+    );
+  }
+
+  Widget chatItem(
+    BuildContext context,
+    String name,
+    String message,
+  ) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+
+      child: ListTile(
+        leading: const CircleAvatar(
+          backgroundColor: Colors.blue,
+          child: Icon(
+            Icons.person,
+            color: Colors.white,
+          ),
         ),
+
+        title: Text(
+          name,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        subtitle: Text(message),
+
+        trailing: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+        ),
+
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatDetail(name: name),
+            ),
+          );
+        },
       ),
     );
   }
